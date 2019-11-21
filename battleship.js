@@ -16,43 +16,42 @@ var p1S = 3;
 var p2A = 5;
 var p2B = 4;
 var p2S = 3;
-var p1Lives = 0;
-var p2Lives = 0;
+var p1Lives = 12;
+var p2Lives = 12;
 
-var p1Name = prompt("Player 1, enter your name.");
-var p1ShipInput = prompt(p1Name + ", how would you like your ships arranged?", "Ex. A:A1-A5;B:C10-F10;S:J7-J9");
-p1ShipInput = p1ShipInput.replace(/\s/g, '');
-var p1ShipArray = parseShips(p1ShipInput, 1);
-
-while(p1Lives != 12)
-{
-	p1Lives = 0;
-	alert("Invalid input.");
-	p1ShipInput = prompt(p1Name + ", how would you like your ships arranged?", "Ex. A:A1-A5;B:C10-F10;S:J7-J9");
-	p1ShipInput = p1ShipInput.replace(/\s/g, '');
-	p1ShipArray = parseShips(p1ShipInput, 1);
-}
-
-var p2Name = prompt("Player 2, enter your name.");
-var p2ShipInput = prompt(p2Name + ", how would you like your ships arranged?", "Ex. A:A1-A5;B:C10-F10;S:J7-J9");
-p2ShipInput = p2ShipInput.replace(/\s/g, '');
-var p2ShipArray = parseShips(p2ShipInput, 2);
-
-while(p2Lives != 12)
-{
-	p2Lives = 0;
-	alert("Invalid input.");
-	p2ShipInput = prompt(p2Name + ", how would you like your ships arranged?", "Ex. A:A1-A5;B:C10-F10;S:J7-J9");
-	p2ShipInput = p2ShipInput.replace(/\s/g, '');
-	p2ShipArray = parseShips(p2ShipInput, 2);
-}
+startGame();
 
 function startGame()
 {
-	
+	var p1Name = prompt("Player 1, enter your name.");
+	placeShips(1, p1Name);
+	var p1ShipArray = parseShips(p1ShipInput, 1);
+
+	var p2Name = prompt("Player 2, enter your name.");
+	var p2ShipInput = prompt(p2Name + ", how would you like your ships arranged?", "Ex. A:A1-A5;B:C10-F10;S:J7-J9");
+	p2ShipInput = p2ShipInput.replace(/\s/g, '');
+	var p2ShipArray = parseShips(p2ShipInput, 2);
+
+	while(p2Lives != 12)
+	{
+		p2Lives = 0;
+		alert("Invalid input.");
+		p2ShipInput = prompt(p2Name + ", how would you like your ships arranged?", "Ex. A:A1-A5;B:C10-F10;S:J7-J9");
+		p2ShipInput = p2ShipInput.replace(/\s/g, '');
+		p2ShipArray = parseShips(p2ShipInput, 2);
+	}
 }
 
-function parseShips(input, playerNum)
+function placeShips(pNum, pName)
+{
+	if(pNum == 1)
+	{
+		document.getElementById("instructions").style.display = "block";
+		document.getElementById("playerName").innerText = pName + ", place your Aircraft Carrier";
+	}
+}
+
+function parseShips(ship, playerNum)
 {
 	var shipArray = new Array(11);
 	for(var i = 0; i < shipArray.length; i++)
@@ -83,29 +82,53 @@ function parseShips(input, playerNum)
 		}
 	}
 
-	for(var i = 0; i < input.length; i++)
+	selectionTable(shipArray);
+
+	if(ship == "A")
 	{
-		if(input[i] == 'A')
-		{
-			i = i + 2;
-			setPositions('A', shipArray, input.substring(i, i+5), playerNum);
-			i = i + 5;
-		}
-		else if (input[i] == 'B')
-		{
-			i = i + 2;
-			setPositions('B', shipArray, input.substring(i, i+5), playerNum);
-			i = i + 5;
-		}
-		else if (input[i] == 'S')
-		{
-			i = i + 2;
-			setPositions('S', shipArray, input.substring(i, i+5), playerNum);
-			i = i + 5;
-		}
+
+	}
+	else if(ship == "B")
+	{
+
+	}
+	else
+	{
+
 	}
 
 	return shipArray;
+}
+
+function selectionTable(array)
+{
+	var table = document.createElement('table');
+	table.id = "placement";
+	for (var i = 0; i < array.length; i++) 
+	{
+		var row = document.createElement('tr');
+		var cell;
+		for (var j = 0; j < array[i].length; j++) 
+		{
+			if(i == 0 || j == 0)
+			{
+				cell = document.createElement('th');
+				cell.textContent = array[i][j];
+				row.appendChild(cell);
+			}
+			else
+			{
+				cell = document.createElement('td');
+    			cell.id = tableName + letters[j-1] + i;
+    			cell.addEventListener("hover", hover.bind(this, tableName + letters[j-1] + i, array));
+    			cell.addEventListener("click", placeShip.bind(this, tableName + letters[j-1] + i, array));
+    			row.appendChild(cell);
+			}
+		}
+		table.appendChild(row);
+	}
+	$('#tableDiv').append(table);
+	document.getElementById(tableName).style.display = "none";
 }
 
 function setPositions(type, array, input, playerNum)
