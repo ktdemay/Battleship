@@ -1,122 +1,67 @@
 <!DOCTYPE html>
 	<title>Leaderboard</title>
 	<head>
-		<script type="text/javascript">
-			window.onload = function()
-			{
-				sort();
-				readLocalData();
-			}
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-			function playAgain()
-			{
-				window.location.href = "battleship.html";
-			}
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-			var winner = localStorage.getItem("winner");
-			localStorage.removeItem("winner");
+		<title>Battleship</title>
+		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 
-			if(winner != null)
-			{
-				add(winner);
-			}
-
-			function addListItem(item) {
-				var winnerList = document.getElementById("winnerList");
-				var listItem = document.createElement("li");
-				listItem.appendChild(document.createTextNode(item));
-				winnerList.appendChild(listItem);
-		 	}
-
-			function sort()
-			{
-				for(var i = 0; i < localStorage.length; i++)
-				{
-					if(getNumber(localStorage.getItem(localStorage.length-1)) > getNumber(localStorage.getItem(i)))
-					{
-						var temp = localStorage.getItem(i);
-						localStorage.setItem(i, localStorage.getItem(localStorage.length-1));
-						localStorage.setItem(localStorage.length-1, temp);
-					}
-				}
-
-				trim();
-			}
-
-			function trim()
-			{
-				if(localStorage.length > 9)
-				{
-					for(var i = 10; i < localStorage.length; i++)
-					{
-						localStorage.removeItem(i);
-					}
-				}
-			}
-
-			function getNumber(string)
-			{
-				return parseInt(string.substring(0,2));
-			}
-		
-		
-			function readLocalData() 
-			{
-				if (typeof(Storage) !== "undefined") {
-					theList = document.getElementById("winnerList");
-					for (var i = 0; i < localStorage.length; i++) 
-					{
-						addListItem(localStorage.getItem(i));	
-					}
-				}	
-			}
-
-			function add(item)
-			{
-				if (typeof(Storage) !== "undefined") 
-				{
-					var i = localStorage.length;
-					localStorage.setItem(i, item);
-				}
-			}
-		</script>
-		<style type = "text/css">
-			h1 {
+		<style type="text/css">
+			.ol {
 				font-weight: bold;
 				font-family: "Arial", Arial, sans-serif;
 				text-align: left;
-			}
-
-			li {
-				font-weight: bold;
-				font-family: "Arial", Arial, sans-serif;
-				text-align: left;
-			}
-
-			button {
-				font-weight: bold;
-				font-family: "Arial", Arial, sans-serif;
-				font-size: 20px;
-				text-align: center;
-				background-color: "white";
-				border: 2px solid #000000;
-				border-radius: 12px;
-				padding: 10px 24px;
-			}
-
-			button:hover {
-				background-color: #EEEEEE;
-			}
-
-			button:active {
-				background-color: #AAAAAA;
+				font-size: 24px;
 			}
 		</style>
 	<head>
-	<body>
-		<h1>Leaderboard</h1>
-		<ol id="winnerList">
-		</ol>
-		<button onclick = "playAgain()">Play again</button>
+	<body style="background-color: #e9ecef">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="https:pitt.edu/~ktd15">
+				<img src="logo.png" width="30" height="30" alt="">
+			</a>
+			<a class="navbar-brand" href="battleship.html">Battleship</a>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedConent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="battleship.html">Play</span></a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="leaderboard.html">Leaderboard</a>
+					</li>
+				</ul>
+			</div>	
+		</nav>
+
+		<br>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-4 col-md-1"></div>
+				<div class="col-lg-4 col-md-10 col-sm-12">
+					<div class="text-center">
+						<h1 class="display-4">Leaderboard</h1>
+						<hr class="my-4">
+						<div class="row">
+							<div class="col-lg-4"></div>
+							<div class="col">
+								<ol id="winnerList" class="ol">
+								</ol>
+							</div>
+						</div>
+						<button onclick="playAgain()" type="button" class="btn btn-success">Play again</button>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-1"></div>
+			</div>
+		</div>
+
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<script src="leaderboard.js"></script>
 	</body>
 </html>

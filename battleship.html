@@ -33,16 +33,26 @@
 			<a class="navbar-brand" href="https:pitt.edu/~ktd15">
 				<img src="logo.png" width="30" height="30" alt="">
 			</a>
-			<a class="navbar-brand" href="index.html">Battleship</a>
+			<a class="navbar-brand" href="battleship.html">Battleship</a>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedConent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="battleship.html">Play</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="leaderboard.html">Leaderboard</a>
+					</li>
+				</ul>
+			</div>	
 		</nav>
 
 		<br>
 
 		<div class="container-fluid">
 			<h1 id="playerName" class="display-4"></h1>
-			<!-- <button onclick="startGame()" type="button" class="btn btn-success">Start New Game</button> -->
+			<button id="startBtn" onclick="startGame()" type="button" class="btn btn-success">Start New Game</button>
 			<hr class="my-4">
-			<p id="instructions" style="display:none">Rotate using arrow keys, place by clicking</p>
 			<div id="tableDiv"></div>
 		</div>
 
