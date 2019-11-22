@@ -75,8 +75,3 @@ function add(item)
 		localStorage.setItem(i, item);
 	}
 }
-
-function clear()
-{
-	window.localStorage.clear();
-}
