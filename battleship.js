@@ -20,17 +20,8 @@ function startGame()
 	p1ShipArray = parseShips(p1ShipInput, 1);
 
 	p2Name = prompt("Player 2, enter your name.");
-	p2ShipInput = prompt(p2Name + ", how would you like your ships arranged?", "Ex. A:A1-A5;B:C10-F10;S:J7-J9");
-	p2ShipInput = p2ShipInput.replace(/\s/g, '');
+	p2ShipInput = placeShips(p2Name);
 	p2ShipArray = parseShips(p2ShipInput, 2);
-	while(p2Lives != 12)
-	{
-		p2Lives = 0;
-		alert("Invalid input.");
-		p2ShipInput = prompt(p2Name + ", how would you like your ships arranged?", "Ex. A:A1-A5;B:C10-F10;S:J7-J9");
-		p2ShipInput = p2ShipInput.replace(/\s/g, '');
-		p2ShipArray = parseShips(p2ShipInput, 2);
-	}
 
 	document.getElementById("sampleTable").style.display = "none";
 	
@@ -47,10 +38,9 @@ function startGame()
 function placeShips(pName)
 {
 	var shipInput = "";
-	var aPlace = prompt(pName + ", place your Aircraft Carrier (5 spaces)", "Ex. A1-A5");
-	while(!/^([A-J]([1-9]|10)-[A-J]([1-9]|10))$/.test(aPlace))
+	var aPlace, bPlace, sPlace;
+	do
 	{
-		alert("Invalid Input");
 		aPlace = prompt(pName + ", place your Aircraft Carrier (5 spaces)", "Ex. A1-A5");
 		if(/[A-J]([1-9]|10)-[A-J]([1-9]|10)$/.test(aPlace))
 		{
@@ -58,33 +48,45 @@ function placeShips(pName)
 			{
 				if(!aPlace.substring(5).includes("10"))
 				{
+					console.log("1");
 					aPlace = "";
+					alert("Invalid Input");
 				}
 				else if((aPlace.charCodeAt(4)-aPlace.charCodeAt(0)) != 4)
 				{
+					console.log("2");
 					aPlace = "";
+					alert("Invalid Input");
 				}
 			}
 			else if(/[A-J][7-9]$/.test(aPlace.substring(0,3)))
 			{
 				if(aPlace.charAt(1) != aPlace.charAt(4))
 				{
+					console.log("3");
 					aPlace = "";
+					alert("Invalid Input");
 				}
 				else if((aPlace.charCodeAt(3)-aPlace.charCodeAt(0)) != 4)
 				{
+					console.log("4");
 					aPlace = "";
+					alert("Invalid Input");
 				}
 			}
 			else if(/[G-J]/.test(aPlace.substring(0, 1)))
 			{
 				if(aPlace.charAt(0) != aPlace.charAt(3))
 				{
+					console.log("5");
 					aPlace = "";
+					alert("Invalid Input");
 				}
-				else if((aPlace.charCodeAt(4)-aPlace.charCodeAt(1)) != 4)
+				else if((parseInt(aPlace.substring(4))-parseInt(aPlace.substring(1, 2))) != 4)
 				{
+					console.log("6");
 					aPlace = "";
+					alert("Invalid Input");
 				}
 			}
 			else
@@ -93,25 +95,31 @@ function placeShips(pName)
 				{
 					if((aPlace.charCodeAt(3)-aPlace.charCodeAt(0)) != 4)
 					{
+						console.log("7");
 						aPlace = "";
+						alert("Invalid Input");
 					}
 				}
 				else if(aPlace.charCodeAt(3) == aPlace.charCodeAt(0))
 				{
-					if((aPlace.charCodeAt(4)-aPlace.charCodeAt(1)) != 4)
+					if((parseInt(aPlace.substring(4))-parseInt(aPlace.substring(1, 2))) != 4)
 					{
 						aPlace = "";
+						alert("Invalid Input");
 					}
+				}
+				else if((aPlace.charCodeAt(3) != aPlace.charCodeAt(0)) && (aPlace.charCodeAt(4) != aPlace.charCodeAt(1)))
+				{
+					aPlace = "";
+					alert("Invalid Input");
 				}
 			}
 		}
-	}
+	}while((!/^([A-J]([1-9]|10)-[A-J]([1-9]|10))$/.test(aPlace)));
 	shipInput += "A:" + aPlace + ";";
 	
-	var bPlace = prompt(pName + ", place your Battleship (4 spaces)", "Ex. A1-A4");
-	while(!/^([A-J]([1-9]|10)-[A-J]([1-9]|10))$/.test(bPlace))
+	do
 	{
-		alert("Invalid Input");
 		bPlace = prompt(pName + ", place your Battleship (4 spaces)", "Ex. A1-A4");
 		if(/[A-J]([1-9]|10)-[A-J]([1-9]|10)$/.test(bPlace))
 		{
@@ -120,126 +128,143 @@ function placeShips(pName)
 				if(!bPlace.substring(5).includes("10"))
 				{
 					bPlace = "";
+					alert("Invalid Input");
 				}
 				else if((bPlace.charCodeAt(4)-bPlace.charCodeAt(0)) != 3)
 				{
 					bPlace = "";
+					alert("Invalid Input");
 				}
 			}
-			else if(/[A-J][7-9]$/.test(bPlace.substring(0,3)))
+			else if(/[A-J][8-9]$/.test(bPlace.substring(0,3)))
 			{
 				if(bPlace.charAt(1) != bPlace.charAt(4))
 				{
 					bPlace = "";
+					alert("Invalid Input");
 				}
-				else if((bPlace.charCodeAt(3)-bPlace.charCodeAt(0)) != 4)
+				else if((bPlace.charCodeAt(3)-bPlace.charCodeAt(0)) != 3)
 				{
 					bPlace = "";
+					alert("Invalid Input");
 				}
 			}
-			else if(/[G-J]/.test(bPlace.substring(0, 1)))
+			else if(/[H-J]/.test(bPlace.substring(0, 1)))
 			{
 				if(bPlace.charAt(0) != bPlace.charAt(3))
 				{
 					bPlace = "";
+					alert("Invalid Input");
 				}
-				else if((bPlace.charCodeAt(4)-bPlace.charCodeAt(1)) != 4)
+				else if((parseInt(bPlace.substring(4))-parseInt(bPlace.substring(1, 2))) != 3)
 				{
 					bPlace = "";
+					alert("Invalid Input");
 				}
 			}
 			else
 			{
 				if(bPlace.charCodeAt(4) == bPlace.charCodeAt(1))
 				{
-					if((bPlace.charCodeAt(3)-bPlace.charCodeAt(0)) != 4)
+					if((bPlace.charCodeAt(3)-bPlace.charCodeAt(0)) != 3)
 					{
 						bPlace = "";
+						alert("Invalid Input");
 					}
 				}
 				else if(bPlace.charCodeAt(3) == bPlace.charCodeAt(0))
 				{
-					if((bPlace.charCodeAt(4)-bPlace.charCodeAt(1)) != 4)
+					if((parseInt(bPlace.substring(4))-parseInt(bPlace.substring(1, 2))) != 3)
 					{
 						bPlace = "";
+						alert("Invalid Input");
 					}
+				}
+				else if((bPlace.charCodeAt(3) != bPlace.charCodeAt(0)) && (bPlace.charCodeAt(4) != bPlace.charCodeAt(1)))
+				{
+					bPlace = "";
+					alert("Invalid Input");
 				}
 			}
 		}
-	}
+	}while(!/^([A-J]([1-9]|10)-[A-J]([1-9]|10))$/.test(bPlace));
+	shipInput += "B:" + bPlace + ";";
 
-	return shipInput;
-}
-
-/*function checkPlace(pName, input, spaces)
-{
-	var ship;
-	switch(spaces)
+	do
 	{
-		case 5 : ship = "Aircraft Carrier";
-		case 4 : ship = "Battleship";
-		case 3 : ship = "Submarine";
-	}
-
-	while(!/^([A-J]([1-9]|10)-[A-J]([1-9]|10))$/.test(aPlace))
-	{
-		alert("Invalid Input");
-		aPlace = prompt(pName + ", place your Aircraft Carrier (5 spaces)", "Ex. A1-A5");
-		if(/[A-J]([1-9]|10)-[A-J]([1-9]|10)$/.test(aPlace))
+		sPlace = prompt(pName + ", place your Submarine (3 spaces)", "Ex. A1-A3");
+		if(/[A-J]([1-9]|10)-[A-J]([1-9]|10)$/.test(sPlace))
 		{
-			if(/[A-J](10)$/.test(aPlace.substring(0,3)))
+			if(/[A-J](10)$/.test(sPlace.substring(0,3)))
 			{
-				if(!aPlace.substring(5).includes("10"))
+				if(!sPlace.substring(5).includes("10"))
 				{
-					aPlace = "";
+					sPlace = "";
+					alert("Invalid Input");
 				}
-				else if((aPlace.charCodeAt(4)-aPlace.charCodeAt(0)) != 4)
+				else if((sPlace.charCodeAt(4)-sPlace.charCodeAt(0)) != 2)
 				{
-					aPlace = "";
+					sPlace = "";
+					alert("Invalid Input");
 				}
 			}
-			else if(/[A-J][7-9]$/.test(aPlace.substring(0,3)))
+			else if(/[A-J][9]$/.test(sPlace.substring(0,3)))
 			{
-				if(aPlace.charAt(1) != aPlace.charAt(4))
+				if(sPlace.charAt(1) != sPlace.charAt(4))
 				{
-					aPlace = "";
+					sPlace = "";
+					alert("Invalid Input");
 				}
-				else if((aPlace.charCodeAt(3)-aPlace.charCodeAt(0)) != 4)
+				else if((sPlace.charCodeAt(3)-sPlace.charCodeAt(0)) != 2)
 				{
-					aPlace = "";
+					sPlace = "";
+					alert("Invalid Input");
 				}
 			}
-			else if(/[G-J]/.test(aPlace.substring(0, 1)))
+			else if(/[I-J]/.test(sPlace.substring(0, 1)))
 			{
-				if(aPlace.charAt(0) != aPlace.charAt(3))
+				if(sPlace.charAt(0) != sPlace.charAt(3))
 				{
-					aPlace = "";
+					sPlace = "";
+					alert("Invalid Input");
 				}
-				else if((aPlace.charCodeAt(4)-aPlace.charCodeAt(1)) != 4)
+				else if((parseInt(sPlace.substring(4))-parseInt(sPlace.substring(1, 2))) != 2)
 				{
-					aPlace = "";
+					sPlace = "";
+					alert("Invalid Input");
 				}
 			}
 			else
 			{
-				if(aPlace.charCodeAt(4) == aPlace.charCodeAt(1))
+				if(sPlace.charCodeAt(4) == sPlace.charCodeAt(1))
 				{
-					if((aPlace.charCodeAt(3)-aPlace.charCodeAt(0)) != 4)
+					if((sPlace.charCodeAt(3)-sPlace.charCodeAt(0)) != 2)
 					{
-						aPlace = "";
+						sPlace = "";
+						alert("Invalid Input");
 					}
 				}
-				else if(aPlace.charCodeAt(3) == aPlace.charCodeAt(0))
+				else if(sPlace.charCodeAt(3) == sPlace.charCodeAt(0))
 				{
-					if((aPlace.charCodeAt(4)-aPlace.charCodeAt(1)) != 4)
+					if((parseInt(sPlace.substring(4))-parseInt(sPlace.substring(1, 2))) != 2)
 					{
-						aPlace = "";
+						sPlace = "";
+						alert("Invalid Input");
 					}
+				}
+				else if((sPlace.charCodeAt(3) != sPlace.charCodeAt(0)) && (sPlace.charCodeAt(4) != sPlace.charCodeAt(1)))
+				{
+					sPlace = "";
+					alert("Invalid Input");
 				}
 			}
 		}
-	}
-}*/
+	}while(!/^([A-J]([1-9]|10)-[A-J]([1-9]|10))$/.test(sPlace));
+
+	shipInput += "S:" + sPlace;
+
+	return shipInput;
+}
 
 function parseShips(input, playerNum)
 {
